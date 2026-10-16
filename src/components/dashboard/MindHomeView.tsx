@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { MindState } from '../../services/mindStorage';
 import { mindAudio } from '../../services/mindAudio';
 import { 
@@ -11,6 +11,7 @@ import {
   CheckCircle2, 
   Circle, 
   Play, 
+  Pause,
   ArrowRight,
   Target
 } from 'lucide-react';
@@ -30,6 +31,13 @@ export const MindHomeView: React.FC<Props> = ({
 }) => {
   const { scores, streak, habits, totalFocusMinutes } = state;
   const completedHabitsCount = habits.filter((h) => h.isCompleted).length;
+
+  const [, setAudioTick] = useState(0);
+  useEffect(() => {
+    return mindAudio.subscribe(() => {
+      setAudioTick((t) => t + 1);
+    });
+  }, []);
 
   return (
     <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4 text-sm select-none">
@@ -113,6 +121,69 @@ export const MindHomeView: React.FC<Props> = ({
         >
           <Play className="w-4 h-4 fill-white" />
           <span>Start Daily 3-Min Workout</span>
+        </button>
+      </div>
+
+      {/* Quick Ambient Music & Soundscape Player */}
+      <div className="p-3 rounded-2xl bg-gradient-to-r from-[#121629] to-[#0f1422] border border-white/10 flex items-center justify-between">
+        <div className="flex items-center gap-2.5 truncate">
+          <button
+            onClick={async () => {
+              await mindAudio.unlockAudio();
+              mindAudio.playTap();
+              if (mindAudio.isPlaying()) {
+                mindAudio.stopAmbient();
+              } else {
+                mindAudio.playAmbient('lofi');
+              }
+            }}
+            className={`w-9 h-9 rounded-xl flex items-center justify-center transition-all cursor-pointer shadow-md shrink-0 ${
+              mindAudio.isPlaying()
+                ? 'bg-gradient-to-tr from-emerald-500 to-teal-400 text-black shadow-emerald-500/30'
+                : 'bg-white/10 hover:bg-white/15 text-white'
+            }`}
+            title={mindAudio.isPlaying() ? 'Pause focus music' : 'Play Lo-Fi chill beats'}
+          >
+            {mindAudio.isPlaying() ? (
+              <Pause className="w-4 h-4 fill-current" />
+            ) : (
+              <Play className="w-4 h-4 fill-current ml-0.5" />
+            )}
+          </button>
+
+          <div className="truncate">
+            <div className="flex items-center gap-1.5">
+              <span className="text-xs font-bold text-white truncate">
+                {mindAudio.isPlaying() 
+                  ? (mindAudio.getCurrentAmbient() === 'lofi' ? '🎧 Lo-Fi Study Beats' :
+                     mindAudio.getCurrentAmbient() === 'waves' ? '🌊 Ocean Waves' :
+                     mindAudio.getCurrentAmbient() === 'fire' ? '🔥 Cozy Campfire' :
+                     mindAudio.getCurrentAmbient() === 'rain' ? '🌧️ Monsoon Rain' : '🧘 Zen Bowls')
+                  : 'Lo-Fi Chill & Focus Beats'}
+              </span>
+              {mindAudio.isPlaying() && (
+                <span className="flex items-end gap-0.5 h-2.5">
+                  <span className="w-0.5 bg-emerald-400 rounded-full animate-pulse h-2" />
+                  <span className="w-0.5 bg-emerald-400 rounded-full animate-bounce h-2.5" />
+                  <span className="w-0.5 bg-emerald-400 rounded-full animate-pulse h-1.5" />
+                </span>
+              )}
+            </div>
+            <span className="text-[10px] text-slate-400 font-mono block">
+              {mindAudio.isPlaying() ? 'Playing for focus · tap to pause' : 'Tap play for instant study music'}
+            </span>
+          </div>
+        </div>
+
+        <button
+          onClick={() => {
+            mindAudio.playTap();
+            onStartGame('garden');
+          }}
+          className="px-2.5 py-1.5 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 text-[11px] font-semibold flex items-center gap-1 shrink-0 border border-emerald-500/20"
+        >
+          <span>Pomodoro</span>
+          <ChevronRight className="w-3 h-3" />
         </button>
       </div>
 

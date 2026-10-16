@@ -21,7 +21,6 @@ interface Props {
   onUpdatePreferences: (updates: Partial<UserPreferences>) => void;
   activeTab: 'today' | 'workouts' | 'garden' | 'habits' | 'hub';
   onChangeTab: (tab: 'today' | 'workouts' | 'garden' | 'habits' | 'hub') => void;
-  onOpenArchitecture: () => void;
   children: React.ReactNode;
 }
 
@@ -30,7 +29,6 @@ export const MobileShell: React.FC<Props> = ({
   onUpdatePreferences,
   activeTab,
   onChangeTab,
-  onOpenArchitecture,
   children,
 }) => {
   const [timeStr, setTimeStr] = useState('');
@@ -69,16 +67,6 @@ export const MobileShell: React.FC<Props> = ({
         </div>
 
         <div className="flex items-center gap-2">
-          {/* Architecture inspect button */}
-          <button
-            onClick={onOpenArchitecture}
-            className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white text-[11px] font-medium transition-colors"
-            title="Inspect Clean Architecture & Flutter Specs"
-          >
-            <Code2 className="w-3.5 h-3.5" />
-            <span>Architecture</span>
-          </button>
-
           {/* Device frame switch */}
           <div className="flex items-center bg-[#111420] border border-white/10 rounded-lg p-0.5">
             {(['iphone', 'pixel', 'edge-to-edge'] as const).map((f) => (

@@ -1,0 +1,18 @@
+{
+  "name": "NEXUS · MindGym",
+  "short_name": "MindGym",
+  "description": "Daily Cognitive Fitness, Deep Work Garden & Habit Mastery",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#07080d",
+  "theme_color": "#07080d",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='25' fill='%2310b981'/><text x='50' y='68' font-size='50' text-anchor='middle' fill='white'>🧠</text></svg>",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

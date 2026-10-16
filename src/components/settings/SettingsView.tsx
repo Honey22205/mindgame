@@ -26,13 +26,11 @@ import {
 interface Props {
   preferences: UserPreferences;
   onUpdatePreferences: (updates: Partial<UserPreferences>) => void;
-  onOpenArchitecture: () => void;
 }
 
 export const SettingsView: React.FC<Props> = ({
   preferences,
   onUpdatePreferences,
-  onOpenArchitecture,
 }) => {
   const [userName, setUserName] = useState(preferences.userName);
   const [userTitle, setUserTitle] = useState(preferences.userTitle);
@@ -132,31 +130,6 @@ export const SettingsView: React.FC<Props> = ({
         <h2 className="text-xl font-bold text-white tracking-tight mt-0.5">
           Settings & Engine
         </h2>
-      </div>
-
-      {/* Code & Architecture Banner for Interviewers */}
-      <div 
-        onClick={onOpenArchitecture}
-        className="p-4 rounded-2xl bg-gradient-to-r from-indigo-950/60 to-cyan-950/40 border border-cyan-500/40 cursor-pointer hover:border-cyan-400 transition-all shadow-lg shadow-cyan-950/30 group"
-      >
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center text-cyan-300 group-hover:scale-105 transition-transform">
-              <Code2 className="w-5 h-5" />
-            </div>
-            <div>
-              <div className="flex items-center gap-1.5">
-                <h4 className="text-xs font-bold text-white">Flutter & Mobile Architecture</h4>
-                <span className="text-[9px] font-mono px-1.5 py-0.2 rounded bg-cyan-500/20 text-cyan-300">
-                  INTERVIEW SPEC
-                </span>
-              </div>
-              <p className="text-[11px] text-slate-300 mt-0.5">
-                Inspect Riverpod, Drift SQLite schema, Clean Architecture, and Android build configs.
-              </p>
-            </div>
-          </div>
-        </div>
       </div>
 
       {/* Profile Section */}

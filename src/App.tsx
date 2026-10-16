@@ -23,7 +23,6 @@ import { HabitsView } from './components/habits/HabitsView';
 
 // Layout & Modals
 import { MobileShell } from './components/layout/MobileShell';
-import { ArchitectureModal } from './components/architecture/ArchitectureModal';
 import { TaskDetailModal } from './components/tasks/TaskDetailModal';
 import { TasksView } from './components/tasks/TasksView';
 import { CalendarView } from './components/calendar/CalendarView';
@@ -43,7 +42,6 @@ export default function App() {
   const [tasks, setTasks] = useState<Task[]>(() => storage.getTasks());
   const [events, setEvents] = useState<CalendarEvent[]>(() => storage.getEvents());
   const [preferences, setPreferences] = useState<UserPreferences>(() => storage.getPreferences());
-  const [isArchitectureOpen, setIsArchitectureOpen] = useState(false);
   const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
   const [taskToEdit, setTaskToEdit] = useState<Task | null>(null);
 
@@ -122,7 +120,6 @@ export default function App() {
         setActiveGame(null);
         setActiveTab(tab);
       }}
-      onOpenArchitecture={() => setIsArchitectureOpen(true)}
     >
       {/* 1. Full-Screen Active Mini-Games */}
       {activeGame === 'math' && (
@@ -199,12 +196,6 @@ export default function App() {
           )}
         </>
       )}
-
-      {/* Architecture & Engineering Defense Modal */}
-      <ArchitectureModal
-        isOpen={isArchitectureOpen}
-        onClose={() => setIsArchitectureOpen(false)}
-      />
 
       {/* Task Creation & Edit Modal */}
       <TaskDetailModal
